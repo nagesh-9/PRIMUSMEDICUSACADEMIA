@@ -90,9 +90,46 @@
                 margin-right: 0;
                 margin-bottom: 1rem;
             }
-            .contact-form input, .contact-form textarea, .contact-form button {
-                width: 100%;
-            }
+        }
+
+        /* Styles for the Course Details Modal */
+        .course-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .course-modal-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .course-modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-lg */
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh; /* Limit height for scrollability */
+            overflow-y: auto; /* Enable scrolling for long content */
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .course-modal-overlay.show .course-modal-content {
+            transform: translateY(0);
         }
     </style>
 
@@ -184,10 +221,7 @@
                         <button data-section="courses" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Courses</button>
                     </li>
                     <li>
-                        <button data-section="verify" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Verify Certificate</button>
-                    </li>
-                    <li>
-                        <button data-section="contact" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Contact Us</button>
+                        <button data-section="verify" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Check Certificate</button>
                     </li>
                 </ul>
             </nav>
@@ -277,74 +311,74 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Course 1 -->
                     <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Basic First Aid Training</h4>
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="basic-first-aid">Basic First Aid Training</h4>
                         <p class="text-gray-700 leading-relaxed">Learn the fundamental principles of emergency care, including CPR (Adult & Child), choking management, bleeding & wound control, and emergency contact protocols. Develop essential skills to respond effectively in critical situations.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
-                            Learn More & Enroll
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="basic-first-aid">
+                            View Course Details
                         </button>
                     </div>
                     <!-- Course 2 -->
                     <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Advanced First Aid</h4>
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="advanced-first-aid">Advanced First Aid</h4>
                         <p class="text-gray-700 leading-relaxed">Delve deeper into advanced emergency procedures such as scene safety, triage basics, multi-casualty management, and handling specific injuries like burns, poisoning, and head, neck & spinal injuries.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
-                            Learn More & Enroll
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="advanced-first-aid">
+                            View Course Details
                         </button>
                     </div>
                     <!-- Course 3 -->
                     <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Patient Care Attendant Training</h4>
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="patient-care-attendant">Patient Care Attendant Training</h4>
                         <p class="text-gray-700 leading-relaxed">Acquire the skills necessary for compassionate patient care, including basic anatomy & physiology, hygiene, bathing & dressing assistance, monitoring vital signs, and ethical considerations in patient support.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
-                            Learn More & Enroll
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="patient-care-attendant">
+                            View Course Details
                         </button>
                     </div>
                     <!-- Course 4 -->
                     <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Mental Health First Aid</h4>
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="mental-health-first-aid">Mental Health First Aid</h4>
                         <p class="text-gray-700 leading-relaxed">Understand common mental health disorders, recognize early signs of mental distress, and learn how to provide initial help and support to individuals experiencing mental health challenges and crisis scenarios.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
-                            Learn More & Enroll
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="mental-health-first-aid">
+                            View Course Details
                         </button>
                     </div>
                     <!-- Course 5 -->
                     <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Medical Coding and Billing (ICD-10, CPT)</h4>
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="medical-coding-billing">Medical Coding and Billing (ICD-10, CPT)</h4>
                         <p class="text-gray-700 leading-relaxed">Learn the essentials of healthcare documentation, ICD-10-CM and CPT coding guidelines, insurance billing & claims processes, EMR systems, and HIPAA & legal compliance through practice sessions and case studies.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
-                            Learn More & Enroll
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="medical-coding-billing">
+                            View Course Details
                         </button>
                     </div>
                     <!-- Course 6 -->
                     <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Hygiene & Sanitation Awareness</h4>
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="hygiene-sanitation">Hygiene & Sanitation Awareness</h4>
                         <p class="text-gray-700 leading-relaxed">Focus on the importance of hygiene in health, proper handwashing techniques, safe drinking water practices, personal hygiene basics, and environmental sanitation to prevent the spread of common diseases.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
-                            Learn More & Enroll
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="hygiene-sanitation">
+                            View Course Details
                         </button>
                     </div>
                     <!-- Course 7 -->
                     <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Nutrition & Diet Planning Basics</h4>
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="nutrition-diet">Nutrition & Diet Planning Basics</h4>
                         <p class="text-gray-700 leading-relaxed">Gain foundational knowledge in nutrition science, macronutrients and micronutrients, reading food labels, daily calorie requirements, and creating balanced diet plans across life stages.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
-                            Learn More & Enroll
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="nutrition-diet">
+                            View Course Details
                         </button>
                     </div>
                     <!-- Course 8 -->
                     <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Disaster & Emergency Response Training</h4>
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="disaster-emergency">Disaster & Emergency Response Training</h4>
                         <p class="text-gray-700 leading-relaxed">Prepare for various disasters, understand evacuation planning, triage & mass casualty response, communication in crisis, emergency kit preparation, and essential rescue & recovery techniques.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
-                            Learn More & Enroll
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="disaster-emergency">
+                            View Course Details
                         </button>
                     </div>
                     <!-- Course 9 -->
                     <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Dental Assistant Basic Training</h4>
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="dental-assistant">Dental Assistant Basic Training</h4>
                         <p class="text-gray-700 leading-relaxed">Get an introduction to dental terminology & equipment, chairside assisting techniques, patient preparation & education, sterilization & infection control, dental charting, and scheduling in a dental office setting.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
-                            Learn More & Enroll
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="dental-assistant">
+                            View Course Details
                         </button>
                     </div>
                 </div>
@@ -376,7 +410,7 @@
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
-                            <span id="verifyBtnText">Verify</span>
+                            <span id="verifyBtnText">Check Certificate</span>
                             <!-- Loading Spinner (SVG) -->
                             <svg id="loadingSpinner" class="h-5 w-5 animate-spin text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -390,95 +424,25 @@
                 </div>
             </div>
         </section>
-
-        <!-- Contact Us Section -->
-        <section id="contact" class="py-20 px-6 bg-gray-50">
-            <div class="container mx-auto">
-                <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Contact Us</h2>
-                <div class="flex flex-col lg:flex-row lg:space-x-12">
-                    <div class="lg:w-1/2 mb-12 lg:mb-0">
-                        <h3 class="text-2xl font-semibold text-blue-700 mb-6">Get in Touch</h3>
-                        <p class="text-lg text-gray-700 mb-8">
-                            Have questions, need more information about our courses, or want to discuss a partnership? Feel free to reach out to us using the contact details below or by filling out the form.
-                        </p>
-                        <div class="space-y-4">
-                            <div class="flex items-center text-lg text-gray-800">
-                                <!-- Mail Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 flex-shrink-0">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                                    <polyline points="22,6 12,13 2,6"></polyline>
-                                </svg>
-                                <a href="mailto:info@primusmedicus.com" class="hover:underline">info@primusmedicus.com</a>
-                            </div>
-                            <div class="flex items-center text-lg text-gray-800">
-                                <!-- Phone Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 flex-shrink-0">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                                ></svg>
-                                <a href="tel:+911234567890" class="hover:underline">+91 12345 67890</a> <!-- Replace with actual number -->
-                            </div>
-                            <div class="flex items-start text-lg text-gray-800">
-                                <!-- Map Pin Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 flex-shrink-0 mt-1">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                    <circle cx="12" cy="10" r="3"></circle>
-                                </svg>
-                                <p>
-                                    PRIMUS MEDICUS ACADEMIA<br />
-                                    [Your Full Address Here]<br />
-                                    Malikipuram, Andhra Pradesh, India
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lg:w-1/2">
-                        <h3 class="text-2xl font-semibold text-blue-700 mb-6">Send Us a Message</h3>
-                        <form class="bg-white p-8 rounded-xl shadow-lg">
-                            <div class="mb-4">
-                                <label for="contactName" class="block text-gray-700 text-sm font-bold mb-2">Your Name</label>
-                                <input
-                                    type="text"
-                                    id="contactName"
-                                    class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    placeholder="John Doe"
-                                    required
-                                    aria-label="Your Name"
-                                />
-                            </div>
-                            <div class="mb-4">
-                                <label for="contactEmail" class="block text-gray-700 text-sm font-bold mb-2">Your Email</label>
-                                <input
-                                    type="email"
-                                    id="contactEmail"
-                                    class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                    placeholder="your.email@example.com"
-                                    required
-                                    aria-label="Your Email"
-                                />
-                            </div>
-                            <div class="mb-6">
-                                <label for="contactMessage" class="block text-gray-700 text-sm font-bold mb-2">Your Message</label>
-                                <textarea
-                                    id="contactMessage"
-                                    rows="6"
-                                    class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
-                                    placeholder="Type your message here..."
-                                    required
-                                    aria-label="Your Message"
-                                ></textarea>
-                            </div>
-                            <button
-                                type="submit"
-                                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md w-full"
-                            >
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
+
+    <!-- Course Details Modal Overlay -->
+    <div id="courseDetailsOverlay" class="course-modal-overlay">
+        <div class="course-modal-content">
+            <button id="closeCourseModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <h3 id="modalCourseTitle" class="text-3xl font-bold text-blue-800 mb-4"></h3>
+            <p id="modalCourseDescription" class="text-gray-700 leading-relaxed mb-6"></p>
+            <h4 class="text-2xl font-bold text-blue-700 mb-4">Course Modules:</h4>
+            <ul id="modalCourseModules" class="list-disc list-inside text-gray-700 space-y-2">
+                <!-- Modules will be dynamically inserted here -->
+            </ul>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-blue-900 text-white py-8 text-center rounded-t-lg">
@@ -507,6 +471,179 @@
             const verifyBtnText = document.getElementById('verifyBtnText');
             const loadingSpinner = document.getElementById('loadingSpinner');
             const verifyIcon = document.getElementById('verifyIcon'); // Search icon
+
+            // References to DOM elements for Course Details Modal
+            const courseDetailsOverlay = document.getElementById('courseDetailsOverlay');
+            const closeCourseModalBtn = document.getElementById('closeCourseModalBtn');
+            const modalCourseTitle = document.getElementById('modalCourseTitle');
+            const modalCourseDescription = document.getElementById('modalCourseDescription');
+            const modalCourseModules = document.getElementById('modalCourseModules');
+
+            // Dummy Course Data (replace with actual data fetching from Firestore if available)
+            const coursesData = {
+                'basic-first-aid': {
+                    title: 'Basic First Aid Training',
+                    description: 'This course covers fundamental principles of emergency care, equipping you with essential skills to respond effectively in critical situations. You will learn life-saving techniques applicable in various scenarios.',
+                    modules: [
+                        'Introduction to First Aid',
+                        'Assessing the Scene & Patient Safety',
+                        'Cardiopulmonary Resuscitation (CPR) - Adult & Child',
+                        'Choking Management (Adult, Child, Infant)',
+                        'Bleeding Control & Wound Care',
+                        'Shock Management',
+                        'Burns and Scalds',
+                        'Fractures, Sprains, and Strains',
+                        'Allergic Reactions & Anaphylaxis',
+                        'Recognizing Medical Emergencies (Heart Attack, Stroke, Seizures)',
+                        'Emergency Contact Protocols & Calling for Help'
+                    ]
+                },
+                'advanced-first-aid': {
+                    title: 'Advanced First Aid',
+                    description: 'Building upon basic first aid, this course delves into more complex emergency procedures. It is designed for individuals seeking a deeper understanding and practical skills for advanced response.',
+                    modules: [
+                        'Advanced Scene Safety & Hazard Recognition',
+                        'Basic Triage Principles for Mass Casualties',
+                        'Managing Multiple Casualties',
+                        'Advanced Bleeding Control (Tourniquets, Hemostatic Dressings)',
+                        'Specific Injury Management: Head, Neck & Spinal Injuries',
+                        'Specific Injury Management: Chest & Abdominal Injuries',
+                        'Specific Injury Management: Environmental Emergencies (Hypothermia, Heatstroke)',
+                        'Poisoning & Overdose Management',
+                        'Advanced Airway Management Techniques',
+                        'Use of Automated External Defibrillator (AED)',
+                        'Patient Assessment & Monitoring',
+                        'Long-term Care & Patient Handover'
+                    ]
+                },
+                'patient-care-attendant': {
+                    title: 'Patient Care Attendant Training',
+                    description: 'This comprehensive training provides the necessary skills for compassionate and effective patient care. You will learn to assist patients with daily needs while adhering to ethical standards.',
+                    modules: [
+                        'Introduction to Patient Care Attendant Role',
+                        'Basic Anatomy and Physiology for PCAs',
+                        'Patient Hygiene (Bathing, Grooming, Oral Care)',
+                        'Assistance with Mobility & Transfers',
+                        'Monitoring Vital Signs (Temperature, Pulse, Respiration, BP)',
+                        'Nutrition & Feeding Assistance',
+                        'Infection Control & Prevention',
+                        'Communication Skills for Patient Care',
+                        'Ethical and Legal Considerations in Patient Support',
+                        'Documentation and Reporting',
+                        'Specialized Care for Elderly & Disabled Patients',
+                        'Emergency Procedures for PCAs'
+                    ]
+                },
+                'mental-health-first-aid': {
+                    title: 'Mental Health First Aid',
+                    description: 'Learn to recognize, understand, and respond to signs of mental illnesses and substance use disorders. This course teaches how to provide initial help and support to someone experiencing a mental health crisis or developing a mental health problem.',
+                    modules: [
+                        'Introduction to Mental Health First Aid',
+                        'Understanding Mental Health & Mental Illness',
+                        'Common Mental Health Disorders (Depression, Anxiety, Psychosis)',
+                        'Recognizing Signs of Mental Distress',
+                        'Action Plan for Mental Health Crises (ALGEE)',
+                        'Suicide Risk & Non-Suicidal Self-Injury Crisis',
+                        'Panic Attacks & Traumatic Events Crisis',
+                        'Substance Use Disorders',
+                        'Eating Disorders',
+                        'Providing Initial Support & Resources',
+                        'Connecting Individuals to Professional Help',
+                        'Self-Care for the First Aider'
+                    ]
+                },
+                'medical-coding-billing': {
+                    title: 'Medical Coding and Billing (ICD-10, CPT)',
+                    description: 'Master the essentials of medical coding and billing, crucial for healthcare administration. This course covers industry-standard coding systems, insurance processes, and compliance.',
+                    modules: [
+                        'Introduction to Medical Coding and Billing',
+                        'Healthcare Documentation & Record Keeping',
+                        'ICD-10-CM Coding Guidelines & Application',
+                        'CPT (Current Procedural Terminology) Coding Guidelines & Application',
+                        'HCPCS Level II Coding',
+                        'Medical Terminology for Coders',
+                        'Anatomy and Physiology for Coders',
+                        'Insurance Claims & Reimbursement Process',
+                        'Electronic Medical Records (EMR) Systems',
+                        'HIPAA Compliance & Legal Aspects',
+                        'Auditing & Compliance in Medical Coding',
+                        'Practical Case Studies & Coding Exercises'
+                    ]
+                },
+                'hygiene-sanitation': {
+                    title: 'Hygiene & Sanitation Awareness',
+                    description: 'This course emphasizes the critical importance of hygiene and sanitation for public health. You will learn practical methods to prevent the spread of diseases and maintain a healthy environment.',
+                    modules: [
+                        'Importance of Hygiene & Sanitation',
+                        'Personal Hygiene Basics (Handwashing, Oral Hygiene, Body Care)',
+                        'Food Hygiene & Safety Practices',
+                        'Safe Drinking Water & Water Purification Methods',
+                        'Waste Management & Disposal',
+                        'Pest Control & Vector-borne Diseases',
+                        'Environmental Sanitation & Cleanliness',
+                        'Disease Transmission & Prevention',
+                        'Community Hygiene & Public Health',
+                        'Hygiene in Healthcare Settings (Basic Principles)',
+                        'Role of Hygiene in Preventing Pandemics',
+                        'Awareness Campaigns & Education'
+                    ]
+                },
+                'nutrition-diet': {
+                    title: 'Nutrition & Diet Planning Basics',
+                    description: 'Gain foundational knowledge in nutrition science and learn to create balanced diet plans. This course is ideal for anyone looking to understand healthy eating principles for themselves or to advise others.',
+                    modules: [
+                        'Introduction to Nutrition Science',
+                        'Macronutrients: Carbohydrates, Proteins, Fats',
+                        'Micronutrients: Vitamins & Minerals',
+                        'Understanding Food Labels & Nutritional Information',
+                        'Daily Calorie Requirements & Energy Balance',
+                        'Principles of a Balanced Diet',
+                        'Dietary Guidelines & Food Pyramids',
+                        'Nutrition Across Different Life Stages (Childhood, Pregnancy, Elderly)',
+                        'Common Nutritional Deficiencies & Disorders',
+                        'Weight Management Principles',
+                        'Meal Planning & Preparation Basics',
+                        'Role of Hydration & Fiber'
+                    ]
+                },
+                'disaster-emergency': {
+                    title: 'Disaster & Emergency Response Training',
+                    description: 'Prepare yourself for various disaster scenarios and emergency situations. This training equips you with essential response techniques, communication strategies, and preparedness planning.',
+                    modules: [
+                        'Introduction to Disaster Management',
+                        'Types of Disasters & Their Impacts',
+                        'Emergency Preparedness & Planning',
+                        'Evacuation Procedures & Shelter Management',
+                        'Triage & Mass Casualty Incident Response',
+                        'Emergency Communication & Information Dissemination',
+                        'First Aid in Disaster Settings',
+                        'Search & Rescue Basic Techniques',
+                        'Psychological First Aid in Emergencies',
+                        'Building an Emergency Kit',
+                        'Community Resilience & Recovery',
+                        'Role of Volunteers in Disaster Response'
+                    ]
+                },
+                'dental-assistant': {
+                    title: 'Dental Assistant Basic Training',
+                    description: 'Get an introduction to the essential skills and knowledge required to assist dentists in a clinical setting. This course covers foundational aspects of dental terminology, patient care, and infection control.',
+                    modules: [
+                        'Introduction to Dental Assisting',
+                        'Dental Terminology & Anatomy of the Oral Cavity',
+                        'Dental Equipment & Instruments',
+                        'Chairside Assisting Techniques',
+                        'Patient Preparation & Post-Operative Instructions',
+                        'Sterilization & Infection Control in Dentistry',
+                        'Dental Materials & Their Uses',
+                        'Basic Dental Charting',
+                        'Radiography Principles (Basic)',
+                        'Office Administration & Scheduling',
+                        'Patient Education & Oral Hygiene Instructions',
+                        'Professionalism & Ethics in Dentistry'
+                    ]
+                }
+            };
+
 
             // Set current year in footer
             const currentYearSpan = document.getElementById('currentYear');
@@ -598,9 +735,47 @@
                 }
             };
 
+            // --- Course Details Modal Logic ---
+            const openCourseDetailsModal = (courseId) => {
+                const course = coursesData[courseId];
+                if (course) {
+                    modalCourseTitle.textContent = course.title;
+                    modalCourseDescription.textContent = course.description;
+                    modalCourseModules.innerHTML = ''; // Clear previous modules
+                    course.modules.forEach(moduleText => {
+                        const li = document.createElement('li');
+                        li.textContent = moduleText;
+                        modalCourseModules.appendChild(li);
+                    });
+                    courseDetailsOverlay.classList.add('show');
+                } else {
+                    console.error('Course data not found for ID:', courseId);
+                    // Optionally, display an error message to the user
+                }
+            };
+
+            const closeCourseDetailsModal = () => {
+                courseDetailsOverlay.classList.remove('show');
+            };
+
+
             // Attach the handler to the verify button
             if (verifyBtn) {
                 verifyBtn.addEventListener('click', handleVerifyCertificate);
+            }
+
+            // Attach handlers to "View Course Details" buttons
+            document.querySelectorAll('.view-course-button').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const courseId = this.dataset.courseId;
+                    openCourseDetailsModal(courseId);
+                });
+            });
+
+            // Attach handler to close modal button
+            if (closeCourseModalBtn) {
+                closeCourseModalBtn.addEventListener('click', closeCourseDetailsModal);
             }
 
             // --- Smooth Scrolling for Navigation ---

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRIMUS MEDICUS ACADEMIA</title>
+
+    <!-- Tailwind CSS CDN for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts - Roboto for clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        .font-roboto {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* Animations for the hero section blobs */
+        @keyframes blob {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        /* Apply animations */
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        /* Animation delays for staggered effects */
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+
+        /* Utility for hiding elements */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Ensure images fit within their containers */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 3.5rem; /* Adjust font size for smaller screens */
+            }
+            .hero p {
+                font-size: 1.1rem;
+            }
+            .course-grid {
+                grid-template-columns: 1fr; /* Stack courses on small screens */
+            }
+            .verification-form input, .verification-form button {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            .contact-form input, .contact-form textarea, .contact-form button {
+                width: 100%;
+            }
+        }
+    </style>
+
+    <!-- Firebase CDN Imports for Firestore -->
+    <script type="module">
+        // Import Firebase services from CDN
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+
+        // Firebase Configuration - Directly integrated using your provided details
+        const firebaseConfig = {
+            apiKey: "AIzaSyASZPSgcxTH9ziqWsn5sLIcjthZ3QkPzgY",
+            authDomain: "primus-medicus-academia.firebaseapp.com",
+            projectId: "primus-medicus-academia",
+            storageBucket: "primus-medicus-academia.firebasestorage.app",
+            messagingSenderId: "408569653938",
+            appId: "1:408569653938:web:e5148418ab913aa57bf7ab",
+            measurementId: "G-ZW58XDQ261"
+        };
+
+        // Global Firebase instances
+        let app;
+        let db;
+
+        // Ensure the DOM is fully loaded before initializing Firebase and page logic
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Initialize Firebase
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                console.log("Firebase app and Firestore initialized.");
+
+                // Hide loading overlay once Firebase is initialized
+                document.getElementById('loading-overlay').classList.add('hidden');
+
+                // Call the main page logic function, passing doc and getDoc functions
+                if (typeof window.initPageLogic === 'function') {
+                    window.initPageLogic(db, doc, getDoc);
+                }
+            } catch (error) {
+                console.error("Failed to initialize Firebase:", error);
+                document.getElementById('loading-overlay').classList.add('hidden');
+                // Pass null for db if initialization failed
+                if (typeof window.initPageLogic === 'function') {
+                    window.initPageLogic(null, null, null); // Pass null for doc and getDoc as well
+                }
+            }
+        });
+    </script>
+</head>
+<body class="font-roboto antialiased text-gray-800">
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="fixed inset-0 bg-gray-100 flex items-center justify-center z-[9999]">
+        <div class="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
+            <!-- Loader Icon (SVG) -->
+            <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p class="mt-4 text-lg font-semibold text-gray-700">Loading website...</p>
+            <p class="text-sm text-gray-500">Establishing secure connection</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-blue-800 text-white p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                <!-- Placeholder for Logo / Icon -->
+                <div class="h-12 w-12 bg-white rounded-full flex items-center justify-center">
+                    <!-- Graduation Cap Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-800">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                        <path d="M6 12v-2l6-3 6 3v2"/>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold">PRIMUS MEDICUS ACADEMIA</h1>
+            </div>
+            <nav>
+                <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
+                    <li>
+                        <button data-section="home" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Home</button>
+                    </li>
+                    <li>
+                        <button data-section="about" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">About Us</button>
+                    </li>
+                    <li>
+                        <button data-section="courses" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Courses</button>
+                    </li>
+                    <li>
+                        <button data-section="verify" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Verify Certificate</button>
+                    </li>
+                    <li>
+                        <button data-section="contact" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Contact Us</button>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative bg-gradient-to-r from-blue-700 to-blue-900 text-white py-24 text-center overflow-hidden rounded-b-lg">
+            <!-- Background Overlay -->
+            <div class="absolute inset-0 bg-black opacity-40"></div>
+            <!-- Abstract Shapes -->
+            <div class="absolute inset-0 z-0 opacity-20">
+                <div class="absolute -top-10 -left-10 w-48 h-48 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+                <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+                <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-600 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+            </div>
+            <div class="relative z-10 container mx-auto px-6">
+                <h2 class="text-5xl md:text-6xl font-extrabold mb-6 drop-shadow-lg leading-tight">
+                    Unlock Your Potential in Healthcare
+                </h2>
+                <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto opacity-90">
+                    PRIMUS MEDICUS ACADEMIA: Empowering Futures, Recognized under Ministry of MSME, Govt. of India.
+                </p>
+                <button data-section="courses" class="scroll-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                    Explore Our Courses
+                </button>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-20 px-6 bg-white">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">About PRIMUS MEDICUS ACADEMIA</h2>
+                <div class="flex flex-col lg:flex-row items-center lg:space-x-12">
+                    <div class="lg:w-1/2 mb-8 lg:mb-0">
+                        <img
+                            src="https://placehold.co/600x400/A7C7E7/0056B3?text=About+Us+Image"
+                            alt="About Us"
+                            class="rounded-lg shadow-xl w-full h-auto"
+                        />
+                    </div>
+                    <div class="lg:w-1/2 text-lg leading-relaxed">
+                        <p class="mb-6">
+                            PRIMUS MEDICUS ACADEMIA is a premier institution dedicated to fostering excellence in healthcare education and training. We are officially recognized under the <strong>Ministry of Micro, Small & Medium Enterprises (MSME), Govt. of India</strong>, a testament to our commitment to quality, national standards, and the growth of skilled professionals.
+                        </p>
+                        <p class="mb-6">
+                            Our mission is to equip individuals with practical, life-saving, and career-advancing skills across various healthcare domains. Through a blend of online and offline training modalities, we ensure accessibility and flexibility for our diverse student base.
+                        </p>
+                        <p>
+                            We believe in a holistic approach to education, focusing not just on technical proficiency but also on empathy, ethical considerations, and real-world applicability, preparing our graduates to make a tangible difference in the healthcare sector.
+                        </p>
+                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="flex items-start">
+                                <!-- Book Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 mt-1 flex-shrink-0">
+                                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5zM20 2H6.5a2.5 2.5 0 0 0 0 5H20"/>
+                                </svg>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-blue-700">Comprehensive Curriculum</h3>
+                                    <p class="text-gray-600 text-base">Expertly designed modules for deep learning.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <!-- Award Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 mt-1 flex-shrink-0">
+                                    <path d="M12 17.75l-6.173 3.535 1.177-7.01L.222 9.07l6.702-.977L12 2l2.076 6.093 6.702.977-4.782 4.205 1.177 7.01z"/>
+                                ></svg>
+                                <div>
+                                    <h3 class="text-xl font-semibold text-blue-700">Government Recognized</h3>
+                                    <p class="text-gray-600 text-base">Credibility backed by MSME, Govt. of India.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses" class="py-20 px-6 bg-gray-50">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Our Certificate Courses</h2>
+
+                <!-- Combined Courses List -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Course 1 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Basic First Aid Training</h4>
+                        <p class="text-gray-700 leading-relaxed">Learn the fundamental principles of emergency care, including CPR (Adult & Child), choking management, bleeding & wound control, and emergency contact protocols. Develop essential skills to respond effectively in critical situations.</p>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
+                            Learn More & Enroll
+                        </button>
+                    </div>
+                    <!-- Course 2 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Advanced First Aid</h4>
+                        <p class="text-gray-700 leading-relaxed">Delve deeper into advanced emergency procedures such as scene safety, triage basics, multi-casualty management, and handling specific injuries like burns, poisoning, and head, neck & spinal injuries.</p>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
+                            Learn More & Enroll
+                        </button>
+                    </div>
+                    <!-- Course 3 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Patient Care Attendant Training</h4>
+                        <p class="text-gray-700 leading-relaxed">Acquire the skills necessary for compassionate patient care, including basic anatomy & physiology, hygiene, bathing & dressing assistance, monitoring vital signs, and ethical considerations in patient support.</p>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
+                            Learn More & Enroll
+                        </button>
+                    </div>
+                    <!-- Course 4 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Mental Health First Aid</h4>
+                        <p class="text-gray-700 leading-relaxed">Understand common mental health disorders, recognize early signs of mental distress, and learn how to provide initial help and support to individuals experiencing mental health challenges and crisis scenarios.</p>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
+                            Learn More & Enroll
+                        </button>
+                    </div>
+                    <!-- Course 5 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Medical Coding and Billing (ICD-10, CPT)</h4>
+                        <p class="text-gray-700 leading-relaxed">Learn the essentials of healthcare documentation, ICD-10-CM and CPT coding guidelines, insurance billing & claims processes, EMR systems, and HIPAA & legal compliance through practice sessions and case studies.</p>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
+                            Learn More & Enroll
+                        </button>
+                    </div>
+                    <!-- Course 6 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Hygiene & Sanitation Awareness</h4>
+                        <p class="text-gray-700 leading-relaxed">Focus on the importance of hygiene in health, proper handwashing techniques, safe drinking water practices, personal hygiene basics, and environmental sanitation to prevent the spread of common diseases.</p>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
+                            Learn More & Enroll
+                        </button>
+                    </div>
+                    <!-- Course 7 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Nutrition & Diet Planning Basics</h4>
+                        <p class="text-gray-700 leading-relaxed">Gain foundational knowledge in nutrition science, macronutrients and micronutrients, reading food labels, daily calorie requirements, and creating balanced diet plans across life stages.</p>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
+                            Learn More & Enroll
+                        </button>
+                    </div>
+                    <!-- Course 8 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Disaster & Emergency Response Training</h4>
+                        <p class="text-gray-700 leading-relaxed">Prepare for various disasters, understand evacuation planning, triage & mass casualty response, communication in crisis, emergency kit preparation, and essential rescue & recovery techniques.</p>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
+                            Learn More & Enroll
+                        </button>
+                    </div>
+                    <!-- Course 9 -->
+                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
+                        <h4 class="text-2xl font-bold text-blue-800 mb-4">Dental Assistant Basic Training</h4>
+                        <p class="text-gray-700 leading-relaxed">Get an introduction to dental terminology & equipment, chairside assisting techniques, patient preparation & education, sterilization & infection control, dental charting, and scheduling in a dental office setting.</p>
+                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md">
+                            Learn More & Enroll
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificate Verification Section -->
+        <section id="verify" class="py-20 px-6 bg-white">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-12 text-blue-800">Verify Your Certificate</h2>
+                <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+                    Enter your unique certificate ID below to instantly verify your details.
+                </p>
+                <div class="bg-gray-100 p-8 rounded-xl shadow-lg max-w-lg mx-auto">
+                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <input
+                            type="text"
+                            id="certificateId"
+                            placeholder="e.g., PMA2024001"
+                            class="w-full sm:w-2/3 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
+                            aria-label="Certificate ID"
+                        />
+                        <button
+                            id="verifyBtn"
+                            class="w-full sm:w-1/3 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md flex items-center justify-center space-x-2"
+                        >
+                            <!-- Search Icon (SVG) -->
+                            <svg id="verifyIcon" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                            <span id="verifyBtnText">Verify</span>
+                            <!-- Loading Spinner (SVG) -->
+                            <svg id="loadingSpinner" class="h-5 w-5 animate-spin text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div id="verificationResult" class="mt-8 p-6 rounded-lg border border-dashed border-gray-300 min-h-[100px] flex items-center justify-center text-left text-gray-700 bg-white">
+                        <p class="text-gray-500">Enter a certificate ID to see results.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Us Section -->
+        <section id="contact" class="py-20 px-6 bg-gray-50">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Contact Us</h2>
+                <div class="flex flex-col lg:flex-row lg:space-x-12">
+                    <div class="lg:w-1/2 mb-12 lg:mb-0">
+                        <h3 class="text-2xl font-semibold text-blue-700 mb-6">Get in Touch</h3>
+                        <p class="text-lg text-gray-700 mb-8">
+                            Have questions, need more information about our courses, or want to discuss a partnership? Feel free to reach out to us using the contact details below or by filling out the form.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-center text-lg text-gray-800">
+                                <!-- Mail Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 flex-shrink-0">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                <a href="mailto:info@primusmedicus.com" class="hover:underline">info@primusmedicus.com</a>
+                            </div>
+                            <div class="flex items-center text-lg text-gray-800">
+                                <!-- Phone Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 flex-shrink-0">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                ></svg>
+                                <a href="tel:+911234567890" class="hover:underline">+91 12345 67890</a> <!-- Replace with actual number -->
+                            </div>
+                            <div class="flex items-start text-lg text-gray-800">
+                                <!-- Map Pin Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 flex-shrink-0 mt-1">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                                <p>
+                                    PRIMUS MEDICUS ACADEMIA<br />
+                                    [Your Full Address Here]<br />
+                                    Malikipuram, Andhra Pradesh, India
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2">
+                        <h3 class="text-2xl font-semibold text-blue-700 mb-6">Send Us a Message</h3>
+                        <form class="bg-white p-8 rounded-xl shadow-lg">
+                            <div class="mb-4">
+                                <label for="contactName" class="block text-gray-700 text-sm font-bold mb-2">Your Name</label>
+                                <input
+                                    type="text"
+                                    id="contactName"
+                                    class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="John Doe"
+                                    required
+                                    aria-label="Your Name"
+                                />
+                            </div>
+                            <div class="mb-4">
+                                <label for="contactEmail" class="block text-gray-700 text-sm font-bold mb-2">Your Email</label>
+                                <input
+                                    type="email"
+                                    id="contactEmail"
+                                    class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="your.email@example.com"
+                                    required
+                                    aria-label="Your Email"
+                                />
+                            </div>
+                            <div class="mb-6">
+                                <label for="contactMessage" class="block text-gray-700 text-sm font-bold mb-2">Your Message</label>
+                                <textarea
+                                    id="contactMessage"
+                                    rows="6"
+                                    class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+                                    placeholder="Type your message here..."
+                                    required
+                                    aria-label="Your Message"
+                                ></textarea>
+                            </div>
+                            <button
+                                type="submit"
+                                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md w-full"
+                            >
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white py-8 text-center rounded-t-lg">
+        <div class="container mx-auto px-6">
+            <p class="text-sm">
+                &copy; <span id="currentYear"></span> PRIMUS MEDICUS ACADEMIA. All rights reserved.
+            </p>
+            <p class="text-xs mt-2 opacity-80">
+                Recognized under Ministry of MSME, Govt. of India.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Main JavaScript Logic -->
+    <script>
+        // This function will be called by the Firebase initialization script in the head
+        window.initPageLogic = async (dbInstance, docFunc, getDocFunc) => {
+            const db = dbInstance;
+            const doc = docFunc;
+            const getDoc = getDocFunc;
+
+            // References to DOM elements for Verification
+            const verifyBtn = document.getElementById('verifyBtn');
+            const certificateIdInput = document.getElementById('certificateId');
+            const verificationResultDiv = document.getElementById('verificationResult');
+            const verifyBtnText = document.getElementById('verifyBtnText');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const verifyIcon = document.getElementById('verifyIcon'); // Search icon
+
+            // Set current year in footer
+            const currentYearSpan = document.getElementById('currentYear');
+            if (currentYearSpan) {
+                currentYearSpan.textContent = new Date().getFullYear();
+            }
+
+            // Firestore Collection Path (now directly to 'certificates' at root)
+            const certificatesCollectionPath = 'certificates';
+
+            // --- Helper to display verification results ---
+            const displayVerificationResult = (type, data) => {
+                verificationResultDiv.classList.remove('text-red-600', 'text-green-600', 'text-blue-600', 'border-red-300', 'border-green-300', 'border-blue-300');
+                verificationResultDiv.classList.add('block'); // Ensure it's visible
+
+                if (type === 'success') {
+                    // Destructure directly accessible fields
+                    const { name, course, id } = data;
+                    // Use 'issuedate' from Firestore document and provide fallback
+                    const issueDate = data.issuedate || 'N/A';
+
+                    verificationResultDiv.innerHTML = `
+                        <div class="space-y-2">
+                            <p class="text-green-600 font-bold text-lg">Certificate Verified Successfully!</p>
+                            <p><strong>Certificate ID:</strong> ${id}</p>
+                            <p><strong>Student Name:</strong> ${name}</p>
+                            <p><strong>Course:</strong> ${course}</p>
+                            <p><strong>Issue Date:</strong> ${issueDate}</p>
+                        </div>
+                    `;
+                    verificationResultDiv.classList.add('border-green-300');
+                } else if (type === 'not-found') {
+                    verificationResultDiv.innerHTML = `<p class="text-red-600 font-bold text-lg">${data}</p>`;
+                    verificationResultDiv.classList.add('border-red-300');
+                } else if (type === 'error') {
+                    verificationResultDiv.innerHTML = `<p class="text-red-600 font-bold text-lg">Error: ${data}</p>`;
+                    verificationResultDiv.classList.add('border-red-300');
+                } else if (type === 'info') {
+                    verificationResultDiv.innerHTML = `<p class="text-blue-600 font-bold text-lg">${data}</p>`;
+                    verificationResultDiv.classList.add('border-blue-300');
+                }
+                verificationResultDiv.classList.remove('hidden'); // Ensure message is visible
+            };
+
+
+            // --- Certificate Verification Logic ---
+            const handleVerifyCertificate = async () => {
+                if (!db) {
+                    displayVerificationResult('error', 'Database not initialized. Please try again.');
+                    return;
+                }
+
+                const inputId = certificateIdInput.value.trim();
+
+                if (!inputId) {
+                    displayVerificationResult('info', 'Please enter a Certificate ID.');
+                    return;
+                }
+
+                // Show loading state
+                verifyBtn.disabled = true;
+                verifyBtnText.classList.add('hidden');
+                loadingSpinner.classList.remove('hidden');
+                verifyIcon.classList.add('hidden'); // Hide default icon during loading
+                verificationResultDiv.innerHTML = '<p class="text-gray-500">Searching...</p>';
+                verificationResultDiv.classList.remove('border-red-300', 'border-green-300', 'border-blue-300'); // Clear previous colors
+
+
+                try {
+                    // Assuming certificates are stored directly under the 'certificates' collection
+                    const certDocRef = doc(db, certificatesCollectionPath, inputId.toUpperCase());
+                    const docSnap = await getDoc(certDocRef);
+
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        displayVerificationResult('success', data);
+                    } else {
+                        displayVerificationResult('not-found', `Certificate ID "${inputId}" not found.`);
+                    }
+                } catch (error) {
+                    console.error("Error verifying certificate:", error);
+                    displayVerificationResult('error', `An error occurred during verification: ${error.message}`);
+                } finally {
+                    // Hide loading state
+                    verifyBtn.disabled = false;
+                    verifyBtnText.classList.remove('hidden');
+                    verifyIcon.classList.remove('hidden'); // Re-show verify icon
+                    loadingSpinner.classList.add('hidden');
+                }
+            };
+
+            // Attach the handler to the verify button
+            if (verifyBtn) {
+                verifyBtn.addEventListener('click', handleVerifyCertificate);
+            }
+
+            // --- Smooth Scrolling for Navigation ---
+            document.querySelectorAll('.scroll-button').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const sectionId = this.dataset.section;
+                    const targetSection = document.getElementById(sectionId);
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        };
+    </script>
+</body>
+</html>

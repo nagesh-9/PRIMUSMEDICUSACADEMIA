@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRIMUS MEDICUS ACADEMIA</title>
 
-    <!-- Tailwind CSS CDN for modern styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts - Roboto for clean typography -->
+    <!-- Google Fonts - Roboto for clean typography (KEPT INTACT) -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-    <!-- Custom CSS -->
+    <!-- Custom CSS (replacing Tailwind) -->
     <style>
         /* General Body Styles */
         body {
@@ -19,12 +16,10 @@
             margin: 0;
             padding: 0;
             line-height: 1.6;
-            color: #333;
-            background-color: #f4f4f4;
-        }
-
-        .font-roboto {
-            font-family: 'Roboto', sans-serif;
+            color: #333; /* text-gray-800 */
+            background-color: #f4f4f4; /* bg-gray-100 / bg-gray-50 */
+            -webkit-font-smoothing: antialiased; /* antialiased */
+            -moz-osx-font-smoothing: grayscale; /* antialiased */
         }
 
         .container {
@@ -74,25 +69,517 @@
             height: auto;
         }
 
-        /* Responsive adjustments for smaller screens */
-        @media (max-width: 768px) {
-            .hero h2 {
-                font-size: 3.5rem; /* Adjust font size for smaller screens */
-            }
-            .hero p {
-                font-size: 1.1rem;
-            }
-            .course-grid {
-                grid-template-columns: 1fr; /* Stack courses on small screens */
-            }
-            .verification-form input, .verification-form button {
-                width: 100%;
-                margin-right: 0;
-                margin-bottom: 1rem;
+        /* Custom Classes for Professional Look */
+
+        /* Header */
+        .header-main {
+            background-color: #1e40af; /* bg-blue-800 */
+            color: white; /* text-white */
+            padding: 1rem; /* p-4 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            position: sticky; /* sticky */
+            top: 0; /* top-0 */
+            z-index: 50; /* z-50 */
+        }
+        .header-content {
+            display: flex;
+            flex-direction: column; /* flex-col */
+            align-items: center; /* items-center */
+            justify-content: space-between; /* justify-between */
+        }
+        @media (min-width: 768px) { /* md: */
+            .header-content {
+                flex-direction: row; /* md:flex-row */
             }
         }
+        .header-logo-group {
+            display: flex;
+            align-items: center; /* items-center */
+            gap: 0.75rem; /* space-x-3 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        @media (min-width: 768px) { /* md: */
+            .header-logo-group {
+                margin-bottom: 0; /* md:mb-0 */
+            }
+        }
+        .header-logo-placeholder {
+            height: 3rem; /* h-12 */
+            width: 3rem; /* w-12 */
+            background-color: white; /* bg-white */
+            border-radius: 9999px; /* rounded-full */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+        }
+        .header-nav ul {
+            display: flex;
+            flex-wrap: wrap; /* flex-wrap */
+            justify-content: center; /* justify-center */
+            gap: 1rem; /* space-x-4 */
+        }
+        @media (min-width: 768px) { /* md: */
+            .header-nav ul {
+                gap: 2rem; /* md:space-x-8 */
+            }
+        }
+        .header-nav-button {
+            padding: 0.5rem 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-weight: 600; /* font-semibold */
+            cursor: pointer;
+            transition-property: color; /* transition-colors */
+            transition-duration: 300ms; /* duration-300 */
+        }
+        .header-nav-button:hover {
+            color: #bfdbfe; /* hover:text-blue-200 */
+        }
 
-        /* Styles for the Course Details Modal */
+        /* Hero Section */
+        .hero-section {
+            position: relative; /* relative */
+            background-image: linear-gradient(to right, #1d4ed8, #1e3a8a); /* bg-gradient-to-r from-blue-700 to-blue-900 */
+            color: white; /* text-white */
+            padding-top: 6rem; /* py-24 */
+            padding-bottom: 6rem; /* py-24 */
+            text-align: center; /* text-center */
+            overflow: hidden; /* overflow-hidden */
+            border-bottom-left-radius: 0.5rem; /* rounded-b-lg */
+            border-bottom-right-radius: 0.5rem; /* rounded-b-lg */
+        }
+        .hero-overlay {
+            position: absolute; /* absolute */
+            inset: 0; /* inset-0 */
+            background-color: black; /* bg-black */
+            opacity: 0.4; /* opacity-40 */
+        }
+        .hero-shapes {
+            position: absolute; /* absolute */
+            inset: 0; /* inset-0 */
+            z-index: 0; /* z-0 */
+            opacity: 0.2; /* opacity-20 */
+        }
+        .blob-1 {
+            position: absolute; /* absolute */
+            top: -2.5rem; /* -top-10 */
+            left: -2.5rem; /* -left-10 */
+            width: 12rem; /* w-48 */
+            height: 12rem; /* h-48 */
+            background-color: #3b82f6; /* bg-blue-500 */
+            border-radius: 9999px; /* rounded-full */
+            mix-blend-mode: multiply; /* mix-blend-multiply */
+            filter: blur(40px); /* blur-xl */
+            animation: blob 7s infinite; /* animate-blob */
+        }
+        .blob-2 {
+            position: absolute; /* absolute */
+            bottom: -2.5rem; /* -bottom-10 */
+            right: -2.5rem; /* -right-10 */
+            width: 16rem; /* w-64 */
+            height: 16rem; /* h-64 */
+            background-color: #60a5fa; /* bg-blue-400 */
+            border-radius: 9999px; /* rounded-full */
+            mix-blend-mode: multiply; /* mix-blend-multiply */
+            filter: blur(40px); /* blur-xl */
+            animation: blob 7s infinite; /* animate-blob */
+            animation-delay: 2s; /* animation-delay-2000 */
+        }
+        .blob-3 {
+            position: absolute; /* absolute */
+            top: 25%; /* top-1/4 */
+            left: 25%; /* left-1/4 */
+            width: 8rem; /* w-32 */
+            height: 8rem; /* h-32 */
+            background-color: #2563eb; /* bg-blue-600 */
+            border-radius: 9999px; /* rounded-full */
+            mix-blend-mode: multiply; /* mix-blend-multiply */
+            filter: blur(40px); /* blur-xl */
+            animation: blob 7s infinite; /* animate-blob */
+            animation-delay: 4s; /* animation-delay-4000 */
+        }
+        .hero-content {
+            position: relative; /* relative */
+            z-index: 10; /* z-10 */
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+        }
+        .hero-heading {
+            font-size: 3rem; /* text-5xl */
+            font-weight: 800; /* font-extrabold */
+            margin-bottom: 1.5rem; /* mb-6 */
+            text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* drop-shadow-lg */
+            line-height: 1.25; /* leading-tight */
+        }
+        @media (min-width: 768px) { /* md: */
+            .hero-heading {
+                font-size: 3.75rem; /* md:text-6xl */
+            }
+        }
+        .hero-paragraph {
+            font-size: 1.25rem; /* text-xl */
+            margin-bottom: 2.5rem; /* mb-10 */
+            max-width: 48rem; /* max-w-3xl */
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9; /* opacity-90 */
+        }
+        @media (min-width: 768px) { /* md: */
+            .hero-paragraph {
+                font-size: 1.5rem; /* md:text-2xl */
+            }
+        }
+        .hero-button {
+            background-color: #22c55e; /* bg-green-500 */
+            color: white; /* text-white */
+            font-weight: 700; /* font-bold */
+            padding: 0.75rem 2rem; /* py-3 px-8 */
+            border-radius: 9999px; /* rounded-full */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            transition-property: all; /* transition-all */
+            transition-duration: 300ms; /* duration-300 */
+            transform: scale(1); /* transform */
+            border: none;
+            cursor: pointer;
+        }
+        .hero-button:hover {
+            background-color: #16a34a; /* hover:bg-green-600 */
+            transform: scale(1.05); /* hover:scale-105 */
+        }
+
+        /* About Us Section */
+        .about-section {
+            padding-top: 5rem; /* py-20 */
+            padding-bottom: 5rem; /* py-20 */
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+            background-color: white; /* bg-white */
+        }
+        .about-heading {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            text-align: center; /* text-center */
+            margin-bottom: 3rem; /* mb-12 */
+            color: #1e40af; /* text-blue-800 */
+        }
+        .about-content-wrapper {
+            display: flex;
+            flex-direction: column; /* flex-col */
+            align-items: center; /* items-center */
+        }
+        @media (min-width: 1024px) { /* lg: */
+            .about-content-wrapper {
+                flex-direction: row; /* lg:flex-row */
+                gap: 3rem; /* lg:space-x-12 */
+            }
+        }
+        .about-image-col {
+            margin-bottom: 2rem; /* mb-8 */
+        }
+        @media (min-width: 1024px) { /* lg: */
+            .about-image-col {
+                width: 50%; /* lg:w-1/2 */
+                margin-bottom: 0; /* lg:mb-0 */
+            }
+        }
+        .about-image {
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-xl */
+            width: 100%; /* w-full */
+            height: auto; /* h-auto */
+        }
+        .about-text-col {
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.6; /* leading-relaxed */
+        }
+        @media (min-width: 1024px) { /* lg: */
+            .about-text-col {
+                width: 50%; /* lg:w-1/2 */
+            }
+        }
+        .about-paragraph {
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+        .about-features-grid {
+            margin-top: 2rem; /* mt-8 */
+            display: grid;
+            grid-template-columns: 1fr; /* grid-cols-1 */
+            gap: 1.5rem; /* gap-6 */
+        }
+        @media (min-width: 768px) { /* md: */
+            .about-features-grid {
+                grid-template-columns: repeat(2, 1fr); /* md:grid-cols-2 */
+            }
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start; /* items-start */
+        }
+        .feature-icon {
+            color: #2563eb; /* text-blue-600 */
+            margin-right: 0.75rem; /* mr-3 */
+            margin-top: 0.25rem; /* mt-1 */
+            flex-shrink: 0; /* flex-shrink-0 */
+        }
+        .feature-title {
+            font-size: 1.25rem; /* text-xl */
+            font-weight: 600; /* font-semibold */
+            color: #1d4ed8; /* text-blue-700 */
+        }
+        .feature-description {
+            color: #4b5563; /* text-gray-600 */
+            font-size: 1rem; /* text-base */
+        }
+
+        /* Courses Section */
+        .courses-section {
+            padding-top: 5rem; /* py-20 */
+            padding-bottom: 5rem; /* py-20 */
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+            background-color: #f9fafb; /* bg-gray-50 */
+        }
+        .courses-heading {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            text-align: center; /* text-center */
+            margin-bottom: 3rem; /* mb-12 */
+            color: #1e40af; /* text-blue-800 */
+        }
+        .course-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* grid-cols-1 */
+            gap: 2rem; /* gap-8 */
+        }
+        @media (min-width: 768px) { /* md: */
+            .course-grid {
+                grid-template-columns: repeat(2, 1fr); /* md:grid-cols-2 */
+            }
+        }
+        @media (min-width: 1024px) { /* lg: */
+            .course-grid {
+                grid-template-columns: repeat(3, 1fr); /* lg:grid-cols-3 */
+            }
+        }
+        .course-card {
+            background-color: white; /* bg-white */
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            padding: 2rem; /* p-8 */
+            transform: scale(1); /* transform */
+            transition-property: transform, box-shadow; /* transition-transform duration-300 hover:scale-105 hover:shadow-2xl */
+            transition-duration: 300ms;
+            border: 1px solid #e5e7eb; /* border border-gray-200 */
+        }
+        .course-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .course-title {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #1e40af; /* text-blue-800 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .course-description {
+            color: #4b5563; /* text-gray-700 */
+            line-height: 1.6; /* leading-relaxed */
+        }
+        .course-button {
+            margin-top: 1.5rem; /* mt-6 */
+            width: 100%; /* w-full */
+            background-color: #2563eb; /* bg-blue-600 */
+            color: white; /* text-white */
+            font-weight: 600; /* font-semibold */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            transition-property: background-color; /* transition-colors */
+            transition-duration: 300ms; /* duration-300 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            border: none;
+            cursor: pointer;
+        }
+        .course-button:hover {
+            background-color: #1d4ed8; /* hover:bg-blue-700 */
+        }
+
+        /* Certificate Verification Section */
+        .verify-section {
+            padding-top: 5rem; /* py-20 */
+            padding-bottom: 5rem; /* py-20 */
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+            background-color: white; /* bg-white */
+            text-align: center; /* text-center */
+        }
+        .verify-heading {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 3rem; /* mb-12 */
+            color: #1e40af; /* text-blue-800 */
+        }
+        .verify-paragraph {
+            font-size: 1.125rem; /* text-lg */
+            color: #4b5563; /* text-gray-700 */
+            margin-bottom: 2rem; /* mb-8 */
+            max-width: 42rem; /* max-w-2xl */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .verify-form-container {
+            background-color: #f9fafb; /* bg-gray-100 */
+            padding: 2rem; /* p-8 */
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+            max-width: 32rem; /* max-w-lg */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .verify-input-group {
+            display: flex;
+            flex-direction: column; /* flex-col */
+            align-items: center; /* items-center */
+            justify-content: center; /* justify-center */
+            gap: 1rem; /* space-y-4 */
+        }
+        @media (min-width: 640px) { /* sm: */
+            .verify-input-group {
+                flex-direction: row; /* sm:flex-row */
+                gap: 1rem; /* sm:space-x-4 */
+                margin-bottom: 0; /* sm:space-y-0 */
+            }
+        }
+        .verify-input {
+            width: 100%; /* w-full */
+            padding: 0.75rem; /* p-3 */
+            border: 1px solid #d1d5db; /* border border-gray-300 */
+            border-radius: 0.5rem; /* rounded-lg */
+            font-size: 1.125rem; /* text-lg */
+        }
+        .verify-input:focus {
+            outline: 2px solid transparent; /* focus:ring-2 */
+            outline-offset: 2px;
+            border-color: #3b82f6; /* focus:border-blue-500 */
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5); /* focus:ring-blue-500 */
+        }
+        @media (min-width: 640px) { /* sm: */
+            .verify-input {
+                width: 66.666667%; /* sm:w-2/3 */
+            }
+        }
+        .verify-button {
+            width: 100%; /* w-full */
+            background-color: #059669; /* bg-green-600 */
+            color: white; /* text-white */
+            font-weight: 700; /* font-bold */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            transition-property: background-color; /* transition-colors */
+            transition-duration: 300ms; /* duration-300 */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-md */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem; /* space-x-2 */
+            border: none;
+            cursor: pointer;
+        }
+        .verify-button:hover {
+            background-color: #047857; /* hover:bg-green-700 */
+        }
+        @media (min-width: 640px) { /* sm: */
+            .verify-button {
+                width: 33.333333%; /* sm:w-1/3 */
+            }
+        }
+        .verify-button-icon {
+            height: 1.25rem; /* h-5 */
+            width: 1.25rem; /* w-5 */
+        }
+        .loading-spinner {
+            height: 1.25rem; /* h-5 */
+            width: 1.25rem; /* w-5 */
+            animation: spin 1s linear infinite; /* animate-spin */
+            color: white; /* text-white */
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .verification-result {
+            margin-top: 2rem; /* mt-8 */
+            padding: 1.5rem; /* p-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 1px dashed #d1d5db; /* border border-dashed border-gray-300 */
+            min-height: 100px; /* min-h-[100px] */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left; /* text-left */
+            color: #4b5563; /* text-gray-700 */
+            background-color: white; /* bg-white */
+        }
+        .verification-result-initial {
+            color: #6b7280; /* text-gray-500 */
+        }
+        .verification-success-text {
+            color: #16a34a; /* text-green-600 */
+            font-weight: 700; /* font-bold */
+            font-size: 1.125rem; /* text-lg */
+        }
+        .verification-error-text {
+            color: #dc2626; /* text-red-600 */
+            font-weight: 700; /* font-bold */
+            font-size: 1.125rem; /* text-lg */
+        }
+        .verification-info-text {
+            color: #2563eb; /* text-blue-600 */
+            font-weight: 700; /* font-bold */
+            font-size: 1.125rem; /* text-lg */
+        }
+
+        /* Loading Overlay */
+        #loading-overlay {
+            position: fixed; /* fixed */
+            inset: 0; /* inset-0 */
+            background-color: #f4f4f4; /* bg-gray-100 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999; /* z-[9999] */
+        }
+        .loading-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem; /* p-6 */
+            background-color: white; /* bg-white */
+            border-radius: 0.5rem; /* rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+        }
+        .loading-spinner-lg {
+            animation: spin 1s linear infinite; /* animate-spin */
+            height: 2.5rem; /* h-10 */
+            width: 2.5rem; /* w-10 */
+            color: #3b82f6; /* text-blue-500 */
+        }
+        .loading-text-main {
+            margin-top: 1rem; /* mt-4 */
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600; /* font-semibold */
+            color: #374151; /* text-gray-700 */
+        }
+        .loading-text-sub {
+            font-size: 0.875rem; /* text-sm */
+            color: #6b7280; /* text-gray-500 */
+        }
+
+        /* Course Details Modal */
         .course-modal-overlay {
             position: fixed;
             top: 0;
@@ -131,9 +618,96 @@
         .course-modal-overlay.show .course-modal-content {
             transform: translateY(0);
         }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: #6b7280; /* text-gray-500 */
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close-btn:hover {
+            color: #1f2937; /* hover:text-gray-800 */
+        }
+
+        .modal-course-title {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 700; /* font-bold */
+            color: #1e40af; /* text-blue-800 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+
+        .modal-course-description {
+            color: #4b5563; /* text-gray-700 */
+            line-height: 1.6; /* leading-relaxed */
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+
+        .modal-modules-heading {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            color: #1d4ed8; /* text-blue-700 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+
+        .modal-modules-list {
+            list-style: disc; /* list-disc */
+            list-style-position: inside; /* list-inside */
+            color: #4b5563; /* text-gray-700 */
+            padding-left: 0;
+        }
+
+        .modal-modules-list li {
+            margin-bottom: 0.5rem; /* space-y-2 */
+        }
+
+
+        /* Footer */
+        .footer-main {
+            background-color: #111827; /* bg-blue-900 */
+            color: white; /* text-white */
+            padding-top: 2rem; /* py-8 */
+            padding-bottom: 2rem; /* py-8 */
+            text-align: center; /* text-center */
+            border-top-left-radius: 0.5rem; /* rounded-t-lg */
+            border-top-right-radius: 0.5rem; /* rounded-t-lg */
+        }
+        .footer-text-sm {
+            font-size: 0.875rem; /* text-sm */
+        }
+        .footer-text-xs {
+            font-size: 0.75rem; /* text-xs */
+            margin-top: 0.5rem; /* mt-2 */
+            opacity: 0.8; /* opacity-80 */
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .hero-heading {
+                font-size: 2.5rem; /* Adjust font size for smaller screens from 3.5rem as in original for better fit */
+            }
+            .hero-paragraph {
+                font-size: 1rem; /* Adjust font size for smaller screens */
+            }
+            .course-grid {
+                grid-template-columns: 1fr; /* Stack courses on small screens */
+            }
+            .verify-input-group { /* Target the verification form inputs/buttons */
+                flex-direction: column;
+            }
+            .verify-input, .verify-button {
+                width: 100%;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
     </style>
 
-    <!-- Firebase CDN Imports for Firestore -->
+    <!-- Firebase CDN Imports for Firestore (KEPT INTACT) -->
     <script type="module">
         // Import Firebase services from CDN
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
@@ -177,47 +751,47 @@
                     window.initPageLogic(null, null, null); // Pass null for doc and getDoc as well
                 }
             }
-        }); 
+        });
     </script>
 </head>
 <body class="font-roboto antialiased text-gray-800">
 
     <!-- Loading Overlay -->
     <div id="loading-overlay" class="fixed inset-0 bg-gray-100 flex items-center justify-center z-[9999]">
-        <div class="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
+        <div class="loading-content">
             <!-- Loader Icon (SVG) -->
-            <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg class="loading-spinner-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-            <p class="mt-4 text-lg font-semibold text-gray-700">Loading website...</p>
-            <p class="text-sm text-gray-500">Establishing secure connection</p>
+            <p class="loading-text-main">Loading website...</p>
+            <p class="loading-text-sub">Establishing secure connection</p>
         </div>
     </div>
 
     <!-- Header -->
-    <header class="bg-blue-800 text-white p-4 shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
-            <div class="flex items-center space-x-3 mb-4 md:mb-0">
+    <header class="header-main">
+        <div class="container header-content">
+            <div class="header-logo-group">
                 <!-- Placeholder for Logo / Icon -->
-                <div class="h-12 w-12 bg-white rounded-full flex items-center justify-center">
-                   <img src="logo.png">
+                <div class="header-logo-placeholder">
+                   <img src="logo.png" alt="Primus Medicus Academia Logo">
                 </div>
-                <h1 class="text-3xl font-bold">PRIMUS MEDICUS ACADEMIA</h1>
+                <h1 class="header-title">PRIMUS MEDICUS ACADEMIA</h1>
             </div>
-            <nav>
-                <ul class="flex flex-wrap justify-center md:space-x-8 space-x-4">
+            <nav class="header-nav">
+                <ul>
                     <li>
-                        <button data-section="home" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Home</button>
+                        <button data-section="home" class="scroll-button header-nav-button">Home</button>
                     </li>
                     <li>
-                        <button data-section="about" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">About Us</button>
+                        <button data-section="about" class="scroll-button header-nav-button">About Us</button>
                     </li>
                     <li>
-                        <button data-section="courses" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Courses</button>
+                        <button data-section="courses" class="scroll-button header-nav-button">Courses</button>
                     </li>
                     <li>
-                        <button data-section="verify" class="scroll-button hover:text-blue-200 transition-colors duration-300 font-semibold">Check Certificate</button>
+                        <button data-section="verify" class="scroll-button header-nav-button">Check Certificate</button>
                     </li>
                 </ul>
             </nav>
@@ -227,69 +801,69 @@
     <!-- Main Content -->
     <main>
         <!-- Hero Section -->
-        <section id="home" class="relative bg-gradient-to-r from-blue-700 to-blue-900 text-white py-24 text-center overflow-hidden rounded-b-lg">
+        <section id="home" class="hero-section">
             <!-- Background Overlay -->
-            <div class="absolute inset-0 bg-black opacity-40"></div>
+            <div class="hero-overlay"></div>
             <!-- Abstract Shapes -->
-            <div class="absolute inset-0 z-0 opacity-20">
-                <div class="absolute -top-10 -left-10 w-48 h-48 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-                <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-                <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-blue-600 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+            <div class="hero-shapes">
+                <div class="blob-1 animate-blob"></div>
+                <div class="blob-2 animate-blob animation-delay-2000"></div>
+                <div class="blob-3 animate-blob animation-delay-4000"></div>
             </div>
-            <div class="relative z-10 container mx-auto px-6">
-                <h2 class="text-5xl md:text-6xl font-extrabold mb-6 drop-shadow-lg leading-tight">
+            <div class="container hero-content">
+                <h2 class="hero-heading">
                     Unlock Your Potential in Healthcare
                 </h2>
-                <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto opacity-90">
+                <p class="hero-paragraph">
                     PRIMUS MEDICUS ACADEMIA: Empowering Futures, Recognized under Ministry of MSME, Govt. of India.
                 </p>
-                <button data-section="courses" class="scroll-button bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105">
+                <button data-section="courses" class="scroll-button hero-button">
                     Explore Our Courses
                 </button>
             </div>
         </section>
 
         <!-- About Us Section -->
-        <section id="about" class="py-20 px-6 bg-white">
-            <div class="container mx-auto">
-                <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">About PRIMUS MEDICUS ACADEMIA</h2>
-                <div class="flex flex-col lg:flex-row items-center lg:space-x-12">
-                    <div class="lg:w-1/2 mb-8 lg:mb-0">
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="about-heading">About PRIMUS MEDICUS ACADEMIA</h2>
+                <div class="about-content-wrapper">
+                    <div class="about-image-col">
                         <img
                             src="logo.png"
                             alt="About Us"
-                            class="rounded-lg shadow-xl w-full h-auto"
+                            class="about-image"
                         />
                     </div>
-                    <div class="lg:w-1/2 text-lg leading-relaxed">
-                        <p class="mb-6">
+                    <div class="about-text-col">
+                        <p class="about-paragraph">
                             PRIMUS MEDICUS ACADEMIA is a premier institution dedicated to fostering excellence in healthcare education and training. We are officially recognized under the <strong>Ministry of Micro, Small & Medium Enterprises (MSME), Govt. of India</strong>, a testament to our commitment to quality, national standards, and the growth of skilled professionals.
                         </p>
-                        <p class="mb-6">
+                        <p class="about-paragraph">
                             Our mission is to equip individuals with practical, life-saving, and career-advancing skills across various healthcare domains. Through a blend of online and offline training modalities, we ensure accessibility and flexibility for our diverse student base.
                         </p>
                         <p>
                             We believe in a holistic approach to education, focusing not just on technical proficiency but also on empathy, ethical considerations, and real-world applicability, preparing our graduates to make a tangible difference in the healthcare sector.
                         </p>
-                        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="flex items-start">
+                        <div class="about-features-grid">
+                            <div class="feature-item">
                                 <!-- Book Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 mt-1 flex-shrink-0">
-                                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5zM20 2H6.5a2.5 2.5 0 0 0 0 5H20"/>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon">
+                                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 0 0 5H20"/>
                                 </svg>
                                 <div>
-                                    <h3 class="text-xl font-semibold text-blue-700">Comprehensive Curriculum</h3>
-                                    <p class="text-gray-600 text-base">Expertly designed modules for deep learning.</p>
+                                    <h3 class="feature-title">Comprehensive Curriculum</h3>
+                                    <p class="feature-description">Expertly designed modules for deep learning.</p>
                                 </div>
                             </div>
-                            <div class="flex items-start">
+                            <div class="feature-item">
                                 <!-- Award Icon -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-600 mr-3 mt-1 flex-shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon">
                                     <path d="M12 17.75l-6.173 3.535 1.177-7.01L.222 9.07l6.702-.977L12 2l2.076 6.093 6.702.977-4.782 4.205 1.177 7.01z"/>
                                 ></svg>
                                 <div>
-                                    <h3 class="text-xl font-semibold text-blue-700">Government Recognized</h3>
-                                    <p class="text-gray-600 text-base">Credibility backed by MSME, Govt. of India.</p>
+                                    <h3 class="feature-title">Government Recognized</h3>
+                                    <p class="feature-description">Credibility backed by MSME, Govt. of India.</p>
                                 </div>
                             </div>
                         </div>
@@ -299,81 +873,81 @@
         </section>
 
         <!-- Courses Section -->
-        <section id="courses" class="py-20 px-6 bg-gray-50">
-            <div class="container mx-auto">
-                <h2 class="text-4xl font-bold text-center mb-12 text-blue-800">Our Certificate Courses</h2>
+        <section id="courses" class="courses-section">
+            <div class="container">
+                <h2 class="courses-heading">Our Certificate Courses</h2>
 
                 <!-- Combined Courses List -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="course-grid">
                     <!-- Course 1 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="basic-first-aid">Basic First Aid Training</h4>
-                        <p class="text-gray-700 leading-relaxed">Learn the fundamental principles of emergency care, including CPR (Adult & Child), choking management, bleeding & wound control, and emergency contact protocols. Develop essential skills to respond effectively in critical situations.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="basic-first-aid">
+                    <div class="course-card">
+                        <h4 class="course-title" data-course-id="basic-first-aid">Basic First Aid Training</h4>
+                        <p class="course-description">Learn the fundamental principles of emergency care, including CPR (Adult & Child), choking management, bleeding & wound control, and emergency contact protocols. Develop essential skills to respond effectively in critical situations.</p>
+                        <button class="course-button view-course-button" data-course-id="basic-first-aid">
                             View Course Details
                         </button>
                     </div>
                     <!-- Course 2 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="advanced-first-aid">Advanced First Aid</h4>
-                        <p class="text-gray-700 leading-relaxed">Delve deeper into advanced emergency procedures such as scene safety, triage basics, multi-casualty management, and handling specific injuries like burns, poisoning, and head, neck & spinal injuries.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="advanced-first-aid">
+                    <div class="course-card">
+                        <h4 class="course-title" data-course-id="advanced-first-aid">Advanced First Aid</h4>
+                        <p class="course-description">Delve deeper into advanced emergency procedures such as scene safety, triage basics, multi-casualty management, and handling specific injuries like burns, poisoning, and head, neck & spinal injuries.</p>
+                        <button class="course-button view-course-button" data-course-id="advanced-first-aid">
                             View Course Details
                         </button>
                     </div>
                     <!-- Course 3 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="patient-care-attendant">Patient Care Attendant Training</h4>
-                        <p class="text-gray-700 leading-relaxed">Acquire the skills necessary for compassionate patient care, including basic anatomy & physiology, hygiene, bathing & dressing assistance, monitoring vital signs, and ethical considerations in patient support.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="patient-care-attendant">
+                    <div class="course-card">
+                        <h4 class="course-title" data-course-id="patient-care-attendant">Patient Care Attendant Training</h4>
+                        <p class="course-description">Acquire the skills necessary for compassionate patient care, including basic anatomy & physiology, hygiene, bathing & dressing assistance, monitoring vital signs, and ethical considerations in patient support.</p>
+                        <button class="course-button view-course-button" data-course-id="patient-care-attendant">
                             View Course Details
                         </button>
                     </div>
                     <!-- Course 4 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="mental-health-first-aid">Mental Health First Aid</h4>
-                        <p class="text-gray-700 leading-relaxed">Understand common mental health disorders, recognize early signs of mental distress, and learn how to provide initial help and support to individuals experiencing mental health challenges and crisis scenarios.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="mental-health-first-aid">
+                    <div class="course-card">
+                        <h4 class="course-title" data-course-id="mental-health-first-aid">Mental Health First Aid</h4>
+                        <p class="course-description">Understand common mental health disorders, recognize early signs of mental distress, and learn how to provide initial help and support to individuals experiencing mental health challenges and crisis scenarios.</p>
+                        <button class="course-button view-course-button" data-course-id="mental-health-first-aid">
                             View Course Details
                         </button>
                     </div>
                     <!-- Course 5 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="medical-coding-billing">Medical Coding and Billing (ICD-10, CPT)</h4>
-                        <p class="text-gray-700 leading-relaxed">Learn the essentials of healthcare documentation, ICD-10-CM and CPT coding guidelines, insurance billing & claims processes, EMR systems, and HIPAA & legal compliance through practice sessions and case studies.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="medical-coding-billing">
+                    <div class="course-card">
+                        <h4 class="course-title" data-course-id="medical-coding-billing">Medical Coding and Billing (ICD-10, CPT)</h4>
+                        <p class="course-description">Learn the essentials of healthcare documentation, ICD-10-CM and CPT coding guidelines, insurance billing & claims processes, EMR systems, and HIPAA & legal compliance through practice sessions and case studies.</p>
+                        <button class="course-button view-course-button" data-course-id="medical-coding-billing">
                             View Course Details
                         </button>
                     </div>
                     <!-- Course 6 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="hygiene-sanitation">Hygiene & Sanitation Awareness</h4>
-                        <p class="text-gray-700 leading-relaxed">Focus on the importance of hygiene in health, proper handwashing techniques, safe drinking water practices, personal hygiene basics, and environmental sanitation to prevent the spread of common diseases.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="hygiene-sanitation">
+                    <div class="course-card">
+                        <h4 class="course-title" data-course-id="hygiene-sanitation">Hygiene & Sanitation Awareness</h4>
+                        <p class="course-description">Focus on the importance of hygiene in health, proper handwashing techniques, safe drinking water practices, personal hygiene basics, and environmental sanitation to prevent the spread of common diseases.</p>
+                        <button class="course-button view-course-button" data-course-id="hygiene-sanitation">
                             View Course Details
                         </button>
                     </div>
                     <!-- Course 7 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="nutrition-diet">Nutrition & Diet Planning Basics</h4>
-                        <p class="text-gray-700 leading-relaxed">Gain foundational knowledge in nutrition science, macronutrients and micronutrients, reading food labels, daily calorie requirements, and creating balanced diet plans across life stages.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="nutrition-diet">
+                    <div class="course-card">
+                        <h4 class="course-title" data-course-id="nutrition-diet">Nutrition & Diet Planning Basics</h4>
+                        <p class="course-description">Gain foundational knowledge in nutrition science, macronutrients and micronutrients, reading food labels, daily calorie requirements, and creating balanced diet plans across life stages.</p>
+                        <button class="course-button view-course-button" data-course-id="nutrition-diet">
                             View Course Details
                         </button>
                     </div>
                     <!-- Course 8 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="disaster-emergency">Disaster & Emergency Response Training</h4>
-                        <p class="text-gray-700 leading-relaxed">Prepare for various disasters, understand evacuation planning, triage & mass casualty response, communication in crisis, emergency kit preparation, and essential rescue & recovery techniques.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="disaster-emergency">
+                    <div class="course-card">
+                        <h4 class="course-title" data-course-id="disaster-emergency">Disaster & Emergency Response Training</h4>
+                        <p class="course-description">Prepare for various disasters, understand evacuation planning, triage & mass casualty response, communication in crisis, emergency kit preparation, and essential rescue & recovery techniques.</p>
+                        <button class="course-button view-course-button" data-course-id="disaster-emergency">
                             View Course Details
                         </button>
                     </div>
                     <!-- Course 9 -->
-                    <div class="bg-white rounded-xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl border border-gray-200">
-                        <h4 class="text-2xl font-bold text-blue-800 mb-4" data-course-id="dental-assistant">Dental Assistant Basic Training</h4>
-                        <p class="text-gray-700 leading-relaxed">Get an introduction to dental terminology & equipment, chairside assisting techniques, patient preparation & education, sterilization & infection control, dental charting, and scheduling in a dental office setting.</p>
-                        <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md view-course-button" data-course-id="dental-assistant">
+                    <div class="course-card">
+                        <h4 class="course-title" data-course-id="dental-assistant">Dental Assistant Basic Training</h4>
+                        <p class="course-description">Get an introduction to dental terminology & equipment, chairside assisting techniques, patient preparation & education, sterilization & infection control, dental charting, and scheduling in a dental office setting.</p>
+                        <button class="course-button view-course-button" data-course-id="dental-assistant">
                             View Course Details
                         </button>
                     </div>
@@ -382,40 +956,40 @@
         </section>
 
         <!-- Certificate Verification Section -->
-        <section id="verify" class="py-20 px-6 bg-white">
-            <div class="container mx-auto text-center">
-                <h2 class="text-4xl font-bold mb-12 text-blue-800">Verify Your Certificate</h2>
-                <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+        <section id="verify" class="verify-section">
+            <div class="container">
+                <h2 class="verify-heading">Verify Your Certificate</h2>
+                <p class="verify-paragraph">
                     Enter your unique certificate ID below to instantly verify your details.
                 </p>
-                <div class="bg-gray-100 p-8 rounded-xl shadow-lg max-w-lg mx-auto">
-                    <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <div class="verify-form-container">
+                    <div class="verify-input-group">
                         <input
                             type="text"
                             id="certificateId"
                             placeholder="e.g., PMA2024001"
-                            class="w-full sm:w-2/3 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-lg"
+                            class="verify-input"
                             aria-label="Certificate ID"
                         />
                         <button
                             id="verifyBtn"
-                            class="w-full sm:w-1/3 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 shadow-md flex items-center justify-center space-x-2"
+                            class="verify-button"
                         >
                             <!-- Search Icon (SVG) -->
-                            <svg id="verifyIcon" class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg id="verifyIcon" class="verify-button-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="11" cy="11" r="8"></circle>
                                 <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                             <span id="verifyBtnText">Check Certificate</span>
                             <!-- Loading Spinner (SVG) -->
-                            <svg id="loadingSpinner" class="h-5 w-5 animate-spin text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <svg id="loadingSpinner" class="loading-spinner hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
                         </button>
                     </div>
-                    <div id="verificationResult" class="mt-8 p-6 rounded-lg border border-dashed border-gray-300 min-h-[100px] flex items-center justify-center text-left text-gray-700 bg-white">
-                        <p class="text-gray-500">Enter a certificate ID to see results.</p>
+                    <div id="verificationResult" class="verification-result">
+                        <p class="verification-result-initial">Enter a certificate ID to see results.</p>
                     </div>
                 </div>
             </div>
@@ -425,34 +999,34 @@
     <!-- Course Details Modal Overlay -->
     <div id="courseDetailsOverlay" class="course-modal-overlay">
         <div class="course-modal-content">
-            <button id="closeCourseModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition-colors duration-200">
+            <button id="closeCourseModalBtn" class="modal-close-btn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
                     <line x1="6" y1="6" x2="18" y2="18"></line>
                 </svg>
             </button>
-            <h3 id="modalCourseTitle" class="text-3xl font-bold text-blue-800 mb-4"></h3>
-            <p id="modalCourseDescription" class="text-gray-700 leading-relaxed mb-6"></p>
-            <h4 class="text-2xl font-bold text-blue-700 mb-4">Course Modules:</h4>
-            <ul id="modalCourseModules" class="list-disc list-inside text-gray-700 space-y-2">
+            <h3 id="modalCourseTitle" class="modal-course-title"></h3>
+            <p id="modalCourseDescription" class="modal-course-description"></p>
+            <h4 class="modal-modules-heading">Course Modules:</h4>
+            <ul id="modalCourseModules" class="modal-modules-list">
                 <!-- Modules will be dynamically inserted here -->
             </ul>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="bg-blue-900 text-white py-8 text-center rounded-t-lg">
-        <div class="container mx-auto px-6">
-            <p class="text-sm">
+    <footer class="footer-main">
+        <div class="container px-6">
+            <p class="footer-text-sm">
                 &copy; <span id="currentYear"></span> PRIMUS MEDICUS ACADEMIA. All rights reserved.
             </p>
-            <p class="text-xs mt-2 opacity-80">
+            <p class="footer-text-xs">
                 Recognized under Ministry of MSME, Govt. of India.
             </p>
         </div>
     </footer>
 
-    <!-- Main JavaScript Logic -->
+    <!-- Main JavaScript Logic (KEPT INTACT) -->
     <script>
         // This function will be called by the Firebase initialization script in the head
         window.initPageLogic = async (dbInstance, docFunc, getDocFunc) => {
@@ -651,7 +1225,7 @@
 
             // --- Helper to display verification results ---
             const displayVerificationResult = (type, data) => {
-                verificationResultDiv.classList.remove('text-red-600', 'text-green-600', 'text-blue-600', 'border-red-300', 'border-green-300', 'border-blue-300');
+                verificationResultDiv.classList.remove('verification-success-text', 'verification-error-text', 'verification-info-text', 'border-red-300', 'border-green-300', 'border-blue-300');
                 verificationResultDiv.classList.add('block'); // Ensure it's visible
 
                 if (type === 'success') {
@@ -661,24 +1235,24 @@
                     const issueDate = data.issuedate || 'N/A';
 
                     verificationResultDiv.innerHTML = `
-                        <div class="space-y-2">
-                            <p class="text-green-600 font-bold text-lg">Certificate Verified Successfully!</p>
-                            <p><strong>Certificate ID:</strong> ${id}</p>
+                        <div class="text-left" style="line-height:1.5;">
+                            <p class="verification-success-text">Certificate Verified Successfully!</p>
+                            <p style="margin-top:0.5rem;"><strong>Certificate ID:</strong> ${id}</p>
                             <p><strong>Student Name:</strong> ${name}</p>
                             <p><strong>Course:</strong> ${course}</p>
                             <p><strong>Issue Date:</strong> ${issueDate}</p>
                         </div>
                     `;
-                    verificationResultDiv.classList.add('border-green-300');
+                    verificationResultDiv.style.borderColor = '#90ee90'; /* Light green for success border */
                 } else if (type === 'not-found') {
-                    verificationResultDiv.innerHTML = `<p class="text-red-600 font-bold text-lg">${data}</p>`;
-                    verificationResultDiv.classList.add('border-red-300');
+                    verificationResultDiv.innerHTML = `<p class="verification-error-text">${data}</p>`;
+                    verificationResultDiv.style.borderColor = '#fca5a5'; /* Light red for error border */
                 } else if (type === 'error') {
-                    verificationResultDiv.innerHTML = `<p class="text-red-600 font-bold text-lg">Error: ${data}</p>`;
-                    verificationResultDiv.classList.add('border-red-300');
+                    verificationResultDiv.innerHTML = `<p class="verification-error-text">Error: ${data}</p>`;
+                    verificationResultDiv.style.borderColor = '#fca5a5'; /* Light red for error border */
                 } else if (type === 'info') {
-                    verificationResultDiv.innerHTML = `<p class="text-blue-600 font-bold text-lg">${data}</p>`;
-                    verificationResultDiv.classList.add('border-blue-300');
+                    verificationResultDiv.innerHTML = `<p class="verification-info-text">${data}</p>`;
+                    verificationResultDiv.style.borderColor = '#93c5fd'; /* Light blue for info border */
                 }
                 verificationResultDiv.classList.remove('hidden'); // Ensure message is visible
             };
@@ -703,8 +1277,8 @@
                 verifyBtnText.classList.add('hidden');
                 loadingSpinner.classList.remove('hidden');
                 verifyIcon.classList.add('hidden'); // Hide default icon during loading
-                verificationResultDiv.innerHTML = '<p class="text-gray-500">Searching...</p>';
-                verificationResultDiv.classList.remove('border-red-300', 'border-green-300', 'border-blue-300'); // Clear previous colors
+                verificationResultDiv.innerHTML = '<p class="verification-result-initial">Searching...</p>';
+                verificationResultDiv.style.borderColor = '#d1d5db'; // Reset border color
 
 
                 try {
